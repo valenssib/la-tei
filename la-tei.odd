@@ -1,0 +1,574 @@
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Larroche TEI</title>
+        <author>Valérie Larroche</author>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>TEI Consortium</publisher>
+        <availability status="free">
+          <licence target="http://creativecommons.org/licenses/by-sa/3.0/"> Distributed under a Creative Commons
+            Attribution-ShareAlike 3.0 Unported License </licence>
+          <licence target="http://www.opensource.org/licenses/BSD-2-Clause">
+            <p>Copyright 2013 TEI Consortium.</p>
+            <p>All rights reserved.</p>
+            <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that
+              the following conditions are met:</p>
+            <list>
+              <item>Redistributions of source code must retain the above copyright notice, this list of conditions and the
+                following disclaimer.</item>
+              <item>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and
+                the following disclaimer in the documentation and/or other materials provided with the
+                distribution.</item>
+            </list>
+            <p>This software is provided by the copyright holders and contributors "as is" and any express or implied
+              warranties, including, but not limited to, the implied warranties of merchantability and fitness for a
+              particular purpose are disclaimed. In no event shall the copyright holder or contributors be liable for any
+              direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to,
+              procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however
+              caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence
+              or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such
+              damage.</p>
+          </licence>
+          <p>TEI material can be licensed differently depending on the use you intend to make of it. Hence it is made
+            available under both the CC+BY and BSD-2 licences. The CC+BY licence is generally appropriate for usages which
+            treat TEI content as data or documentation. The BSD-2 licence is generally appropriate for usage of TEI content
+            in a software environment. For further information or clarification, please contact the <ref target="mailto:info@tei-c.org">TEI Consortium</ref>. </p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Created from scratch by James Cummings, but looking at previous tei_minimal and tei_bare exemplars by SPQR and
+          LR.</p>
+      </sourceDesc>
+    </fileDesc><encodingDesc><appInfo><application ident="RomaJS" version="1.0.0" when="2023-10-25T16:28:29.943Z"><desc>File edited with <ref target="https://github.com/TEIC/romajs">RomaJS</ref></desc></application></appInfo><appInfo><application ident="RomaJS" version="1.0.0" when="2023-10-26T20:34:42.355Z"><desc>File edited with <ref target="https://github.com/TEIC/romajs">RomaJS</ref></desc></application></appInfo></encodingDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <head>A Minimal TEI Customization</head>
+      
+      <p>This TEI ODD defines a TEI customization that is as minimal as possible and the schema generated from it will validate
+        a document that is minimally valid against the TEI scheme. It includes only the ten required elements:
+        <list rend="numbered">
+          <item><gi>teiHeader</gi> from the header module to store required metadata</item>
+          <item><gi>fileDesc</gi> from the header module to record information about this file</item>
+          <item><gi>titleStmt</gi> from the header module to record information about the title</item>
+          <item><gi>publicationStmt</gi> from the header module to detail how it is published</item>
+          <item><gi>sourceDesc</gi> from the header module to record where it is from</item>
+          <item><gi>p</gi> from the core module for use in the header and the body</item>
+          <item><gi>title</gi> from the core module for use in the titleStmt</item>
+          <item><gi>TEI</gi> from the textstructure module because what is a TEI file without that?</item>
+          <item><gi>text</gi> from the textstructure module to hold some text</item>
+          <item><gi>body</gi> from the textstructure module as a place to put that text</item>
+        </list>
+      </p>
+      <schemaSpec ident="la" start="TEI" prefix="la_" targetLang="fr" docLang="fr">
+        
+        <!-- required minimal header elements -->
+        <moduleRef key="header" include="teiHeader fileDesc keywords profileDesc"/>
+        
+        <!-- required core elements (p and title for use in titleStmt) -->
+        <moduleRef key="core" include="p title date term desc"/>
+        
+        <!-- required textstructure elements (TEI, text, and body) -->
+        <moduleRef key="textstructure" include="TEI text body"/>
+        
+        <!-- required module tei instantiates lots of classes used for further expansion of this odd -->
+        <moduleRef key="tei"/>
+        
+        
+        <moduleRef key="namesdates" include="orgName event listPerson persName person"/>
+        <moduleRef key="msdescription" include="objectType"/>
+        <moduleRef key="corpus" include="particDesc"/>
+        <moduleRef key="analysis" include="span"/>
+        <elementSpec ident="fileDesc" mode="change">
+          <content>
+            <sequence maxOccurs="1" minOccurs="1">
+              <sequence maxOccurs="1" minOccurs="1">
+                <elementRef key="titleStmt"/>
+                <elementRef key="editionStmt"/>
+                <elementRef key="extent"/>
+                <elementRef key="publicationStmt"/>
+                <elementRef key="seriesStmt"/>
+                <elementRef key="notesStmt"/>
+              </sequence>
+              <elementRef key="sourceDesc"/>
+              <elementRef key="laDesc"/>
+            </sequence>
+          </content>
+        </elementSpec>
+
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="laDesc" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="corpus"/>
+              <elementRef key="activityScene"/>
+              <elementRef key="discoursGenre"/>
+              <elementRef key="technique"/>
+              <elementRef key="conservation"/>
+              <elementRef key="juridique"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="corpus" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="producteur"/>
+              <elementRef key="title"/>
+              <elementRef key="date"/>
+              <elementRef key="topic"/>
+              <elementRef key="keywords"/>
+              <elementRef key="question"/>
+              <elementRef key="orgName"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="activityScene" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="title"/>
+              <elementRef key="objectType"/>
+              <elementRef key="date"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="discoursGenre" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="idDOI"/>
+              <elementRef key="title"/>
+              <elementRef key="date"/>
+              <elementRef key="desc"/>
+              <elementRef key="type"/>
+              <elementRef key="genre"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="technique" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="type"/>
+              <elementRef key="size"/>
+              <elementRef key="date"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="conservation" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="event"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="juridique" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <sequence maxOccurs="0" minOccurs="0">
+              <elementRef key="type"/>
+            </sequence>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="producteur" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="topic" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="question" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="idDOI" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="type" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="genre" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="size" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes/>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+        </elementSpec>
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="citation" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes>
+            <memberOf key="model.global.meta"/>
+          </classes>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+          <attList>
+            <attDef ident="reg-relation">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="pouvoir"/>
+                <valItem ident="générosité"/>
+                <valItem ident="violence"/>
+                <valItem ident="réciprocité"/>
+              </valList>
+            </attDef>
+            <attDef ident="traverse">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Subjectivation"/>
+                <valItem ident="faille"/>
+                <valItem ident="force"/>
+                <valItem ident="ambigüe"/>
+              </valList>
+            </attDef>
+            <attDef ident="mod-acc">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="compromis"/>
+                <valItem ident="consensus"/>
+                <valItem ident="dispositif"/>
+                <valItem ident="négociation"/>
+                <valItem ident="clarification"/>
+                <valItem ident="arrangement"/>
+              </valList>
+            </attDef>
+            <attDef ident="keywords-cit">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="keywords-question">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="mot-desacc">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="malentendu"/>
+                <valItem ident="controverse"/>
+                <valItem ident="conflit"/>
+              </valList>
+            </attDef>
+            <attDef ident="enonc">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="rec-selfdeny">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_soi"/>
+                <valItem ident="estime_de_soi"/>
+                <valItem ident="respect_de_soi"/>
+                <valItem ident="défiance"/>
+                <valItem ident="mésestime_de_soi"/>
+                <valItem ident="irrespect"/>
+                <valItem ident="oubli_de_soi"/>
+              </valList>
+            </attDef>
+            <attDef ident="rec-otherdeny">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_l_autre"/>
+                <valItem ident="estime_de_l_autre"/>
+                <valItem ident="respect_de_l_autre"/>
+                <valItem ident="défiance_de_l_autre"/>
+                <valItem ident="mésestime_de_l_autre"/>
+                <valItem ident="irrespect_de_lautre"/>
+                <valItem ident="oubli_de_l_autre"/>
+              </valList>
+            </attDef>
+            <attDef ident="rec-byother">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_soi"/>
+                <valItem ident="estime_de_soi"/>
+                <valItem ident="respect_de_soi"/>
+                <valItem ident="défiance"/>
+                <valItem ident="mésestime_de_soi"/>
+                <valItem ident="irrespect"/>
+                <valItem ident="oubli_de_soi"/>
+              </valList>
+            </attDef>
+            <attDef ident="mod-dire">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="justif">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Cité_de_l_opinion"/>
+                <valItem ident="cité_projet"/>
+                <valItem ident="cité_inspiration"/>
+                <valItem ident="cité_industrielle"/>
+                <valItem ident="cité_verte"/>
+                <valItem ident="cité_civique"/>
+                <valItem ident="cité_domestique"/>
+                <valItem ident="cité_marchande"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-manag">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="réguler"/>
+                <valItem ident="gérer_le_relationnel"/>
+                <valItem ident="former"/>
+                <valItem ident="déléguer"/>
+                <valItem ident="contrôler"/>
+                <valItem ident="diriger"/>
+                <valItem ident="coordonner"/>
+                <valItem ident="recruter"/>
+              </valList>
+            </attDef>
+            <attDef ident="indic-tempo">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Passé"/>
+                <valItem ident="présent"/>
+                <valItem ident="futur"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-mediation">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Objet_intermédiaire"/>
+                <valItem ident="objet_frontière"/>
+                <valItem ident="infrastructure"/>
+              </valList>
+            </attDef>
+          <attDef ident="role"><datatype><dataRef name="string"/></datatype></attDef><attDef ident="fonction"><datatype><dataRef name="string"/></datatype></attDef></attList>
+        </elementSpec>
+
+        <moduleSpec ident="la" mode="add"/>
+        <elementSpec ident="praxeme" ns="http://www.larroche-tei.org/ns/la" mode="add" module="la">
+          <classes>
+            <memberOf key="model.global.meta"/>
+          </classes>
+          <content>
+            <macroRef key="macro.paraContent"/>
+          </content>
+          <attList>
+            <attDef ident="typePrax">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Nhcoll"/>
+                <valItem ident="Nhind"/>
+                <valItem ident="Ninstrument"/>
+                <valItem ident="Noutil"/>
+                <valItem ident="Nactind"/>
+                <valItem ident="Nactcoll"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-formulation">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="désignation_identifiante"/>
+                <valItem ident="description_classifiante"/>
+              </valList>
+            </attDef>
+            <attDef ident="form-grama">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Déictique"/>
+                <valItem ident="nom_propre"/>
+                <valItem ident="Nom_prénom"/>
+                <valItem ident="Prénom"/>
+                <valItem ident="Pseudo"/>
+                <valItem ident="groupe_nominal"/>
+                <valItem ident="pronom_personnel_anaphorique"/>
+              </valList>
+            </attDef>
+            <attDef ident="nous">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="nous_équipe"/>
+                <valItem ident="nous_générique"/>
+                <valItem ident="nous_ambigu"/>
+                <valItem ident="nous_communauté"/>
+                <valItem ident="nous_direction"/>
+                <valItem ident="nous_je"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-interaction">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="interaction_directe"/>
+                <valItem ident="interaction_indirecte"/>
+                <valItem ident="hors_de_portée"/>
+              </valList>
+            </attDef>
+            <attDef ident="rec-selfdeny">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_soi"/>
+                <valItem ident="estime_de_soi"/>
+                <valItem ident="respect_de_soi"/>
+                <valItem ident="défiance"/>
+                <valItem ident="mésestime_de_soi"/>
+                <valItem ident="irrespect"/>
+                <valItem ident="oubli_de_soi"/>
+              </valList>
+            </attDef>
+            <attDef ident="rec-otherdeny">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_l_autre"/>
+                <valItem ident="estime_de_l_autre"/>
+                <valItem ident="respect_de_l_autre"/>
+                <valItem ident="défiance_de_l_autre"/>
+                <valItem ident="mésestime_de_l_autre"/>
+                <valItem ident="irrespect_de_lautre"/>
+                <valItem ident="oubli_de_l_autre"/>
+              </valList>
+            </attDef>
+            <attDef ident="rec-byother">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="confiance_en_soi"/>
+                <valItem ident="estime_de_soi"/>
+                <valItem ident="respect_de_soi"/>
+                <valItem ident="défiance"/>
+                <valItem ident="mésestime_de_soi"/>
+                <valItem ident="irrespect"/>
+                <valItem ident="oubli_de_soi"/>
+              </valList>
+            </attDef>
+            <attDef ident="mod-dire">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+            </attDef>
+            <attDef ident="justif">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Cité_de_l_opinion"/>
+                <valItem ident="cité_projet"/>
+                <valItem ident="cité_inspiration"/>
+                <valItem ident="cité_industrielle"/>
+                <valItem ident="cité_verte"/>
+                <valItem ident="cité_civique"/>
+                <valItem ident="cité_domestique"/>
+                <valItem ident="cité_marchande"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-manag">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="réguler"/>
+                <valItem ident="gérer_le_relationnel"/>
+                <valItem ident="former"/>
+                <valItem ident="déléguer"/>
+                <valItem ident="contrôler"/>
+                <valItem ident="diriger"/>
+                <valItem ident="coordonner"/>
+                <valItem ident="recruter"/>
+              </valList>
+            </attDef>
+            <attDef ident="indic-tempo">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Passé"/>
+                <valItem ident="présent"/>
+                <valItem ident="futur"/>
+              </valList>
+            </attDef>
+            <attDef ident="type-mediation">
+              <datatype>
+                <dataRef name="string"/>
+              </datatype>
+              <valList type="semi">
+                <valItem ident="Objet_intermédiaire"/>
+                <valItem ident="objet_frontière"/>
+                <valItem ident="infrastructure"/>
+              </valList>
+            </attDef>
+          <attDef ident="entite-cite"><datatype><dataRef name="string"/></datatype></attDef><attDef ident="relate-to"><datatype><dataRef name="string"/></datatype></attDef><attDef ident="role"><datatype><dataRef name="string"/></datatype></attDef><attDef ident="fonction"><datatype><dataRef name="string"/></datatype></attDef></attList>
+        </elementSpec>
+
+
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
